@@ -1,7 +1,10 @@
 import psycopg2
 import os
 
-# establish a connection to the database based on url in env var
+# Barry Mullan May 2023
+# A simple ToDo app that demonstrate an oauth login flow (google) and postgres database persistence
+
+# establish a connection to the database based on url in env var in this format
 # DATABASE_URL=postgres://postgres_user:postgres_password@postgres_hostname:5432/postgres_database_name
 def connect():
     url = os.environ.get("DATABASE_URL")
