@@ -41,15 +41,6 @@ flow = Flow.from_client_secrets_file(
     redirect_uri="https://todo.barrymullan.app/callback"
 )
 
-# decorator function used to annotate which route functions require a login (see app.py)
-def login_is_required(function):
-    def wrapper(*args, **kwargs):
-        if "google_id" not in session:
-            # return redirect("/")
-            return abort(401)  # Authorization required
-        else:
-            return function()
 
-    return wrapper
 
 

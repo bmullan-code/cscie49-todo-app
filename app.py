@@ -20,6 +20,17 @@ app = Flask(__name__)
 # a kubernetes secret (see todo-app-deployment.yaml)
 app.secret_key = os.environ.get("FLASK_APP_SECRET_KEY")
 
+# decorator function used to annotate which route functions require a login (see app.py)
+def login_is_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            # return redirect("/")
+            return abort(401)  # Authorization required
+        else:
+            return function()
+
+    return wrapper
+
 # login route, starts oauth authentication flow
 @app.route("/login")
 def login():
@@ -80,7 +91,6 @@ def index():
 
 # create route, called to create a new todo item 
 @app.route('/create', methods=['POST'])
-@login_is_required
 def create():
     # get user email from session
     email = session["email"]
@@ -94,7 +104,6 @@ def create():
   
 # update route, called when an item is updated (submit update button)
 @app.route('/update', methods=['POST'])
-@login_is_required
 def update():
     # Get the data from the form
     name = request.form['name']
@@ -105,7 +114,6 @@ def update():
     
 # delete route, called when an item is delete (submit delete button)
 @app.route('/delete', methods=['POST'])
-@login_is_required
 def delete():
     # Get the data from the form
     id = request.form['id']
