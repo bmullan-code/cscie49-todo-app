@@ -1,0 +1,7 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: todo-k8s-gce-ssl
+spec:
+  domains:
+    - todo.barrymullan.app

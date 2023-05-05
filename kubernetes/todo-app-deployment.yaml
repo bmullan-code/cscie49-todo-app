@@ -1,0 +1,60 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app-deployment
+  labels:
+    app: todo-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      containers:
+      - name: todo-app
+        image: barrymullan/todo-app-x86
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: todo-app
+              key: postgres-url
+        - name: GOOGLE_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: google-client-id-secret
+              key: GOOGLE_CLIENT_ID
+        - name: FLASK_APP_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret-key
+              key: FLASK_APP_SECRET_KEY
+        volumeMounts:
+          - mountPath: "/var/client-secret"
+            name: client-secret
+            readOnly: true
+      volumes:
+        - name: client-secret
+          secret:
+            secretName: client-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: todo-app-service
+spec:
+ ports:
+ - protocol: TCP
+   port: 8000
+   targetPort: http
+ selector:
+   app: todo-app
+ type: NodePort
