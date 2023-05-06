@@ -58,7 +58,7 @@ def logout():
 # default route, home page with login button
 @app.route("/")
 def index():
-    return "Hello World <a href='/login'><button>Login</button></a>"
+    return "ToDo Application <a href='/login'><button>Login</button></a>"
 
 # callback, registered with google authentication and is called from google once user has 
 # authenticated
