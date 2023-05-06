@@ -20,4 +20,5 @@ steps:
     - --location=us-central1-a
     - --cluster=cscie49-barry-mullan-gke
 
+images: ['us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}']
 # [END cloudbuild_basic_config]
