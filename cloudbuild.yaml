@@ -1,0 +1,23 @@
+
+# [START cloudbuild_basic_config]
+steps:
+  # Docker Build
+  # us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 
+           'us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}', 
+           '.']
+
+  # Docker Push
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 
+           'us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}']
+
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+    - run
+    - --filename=kubernetes/todo-app-deployment.yaml
+    - --location=us-central1
+    - --cluster=cscie49-barry-mullan-gke
+
+# [END cloudbuild_basic_config]
