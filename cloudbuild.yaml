@@ -16,7 +16,7 @@ steps:
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
     - prepare
-    - --iimage=us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}
+    - --image=us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}
     - --filename=kubernetes/todo-app-deployment.yaml
 
   - name: "gcr.io/cloud-builders/gke-deploy"
