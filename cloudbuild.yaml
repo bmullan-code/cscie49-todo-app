@@ -13,16 +13,18 @@ steps:
     args: ['push', 
            'us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}']
 
-  - name: "gcr.io/cloud-builders/gke-deploy"
-    args:
-    - prepare
-    - --image=us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}
-    - --filename=kubernetes/todo-app-deployment.yaml
+  # - name: "gcr.io/cloud-builders/gke-deploy"
+  #   args:
+  #   - prepare
+  #   - --image=us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}
+  #   - --filename=kubernetes/todo-app-deployment.yaml
+  #   - -o expanded
 
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
-    - apply
-    - --filename=kubernetes/todo-app-deployment.yaml
+    - run
+    - --image=us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}
+    - --filename=expanded/kubernetes/todo-app-deployment.yaml
     - --location=us-central1-a
     - --cluster=cscie49-barry-mullan-gke
 
