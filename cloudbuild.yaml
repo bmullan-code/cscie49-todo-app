@@ -17,7 +17,7 @@ steps:
     args:
     - run
     - --filename=kubernetes/todo-app-deployment.yaml
-    - --location=us-central1
+    - --location=us-central1-a
     - --cluster=cscie49-barry-mullan-gke
 
 # [END cloudbuild_basic_config]
