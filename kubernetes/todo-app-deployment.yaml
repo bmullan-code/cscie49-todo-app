@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: barrymullan/todo-app-x86
+        image: us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:latest
+        # image: barrymullan/todo-app-x86
         ports:
         - containerPort: 8000
           name: http
