@@ -24,7 +24,7 @@ steps:
     args:
     - run
     - --image=us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}
-    - --filename=expanded/kubernetes/todo-app-deployment.yaml
+    - --filename=kubernetes/todo-app-deployment.yaml
     - --location=us-central1-a
     - --cluster=cscie49-barry-mullan-gke
 
