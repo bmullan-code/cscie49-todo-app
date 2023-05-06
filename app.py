@@ -3,15 +3,24 @@ import psycopg2
 import os
 import pathlib
 import requests
+import logging
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
+# Imports the Cloud Logging client library
+import google.cloud.logging
+
 from database import *
 from oauth import *
 
 # Barry Mullan May 2023
 # A simple ToDo app that demonstrate an oauth login flow (google) and postgres database persistence
+
+#initialize logging
+client = google.cloud.logging.Client()
+client.setup_logging()
+
 
 # initialize flask framework
 app = Flask(__name__)
@@ -37,6 +46,7 @@ def login():
     # authorization_url, state = flow.authorization_url()
     authorization_url, state = flow.authorization_url(access_type='offline',include_granted_scopes='true')
     session["state"] = state
+    # logging.info('sessionstate )
     return redirect(authorization_url)
 
 # logout route, clears the session and redirects to home page
@@ -76,6 +86,8 @@ def callback():
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
     session["email"] = id_info.get("email")
+    logging.info("logged in:{}".format(id_info.get("email")))
+    logging.info('callback:%s', str(session) )
     return redirect("/todo")
 
 # todo route, main application page rendered from template index.html
