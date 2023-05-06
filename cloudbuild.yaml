@@ -13,7 +13,7 @@ steps:
     args: ['push', 
            'us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}']
 
-- name: "gcr.io/cloud-builders/gke-deploy"
+  - name: "gcr.io/cloud-builders/gke-deploy"
     args:
     - prepare
     - -i 'us-central1-docker.pkg.dev/barry-mullan/barrymullan-docker/cscie49-todo-app:${SHORT_SHA}' 
